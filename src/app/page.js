@@ -19,7 +19,7 @@ export default function Home() {
 
   return (
     <div style={{ padding: 20 }}>
-      <h1>Next.js CRUD App</h1>
+      <h1>Next.js CRUD App for testing</h1>
       <UserForm onUserAdded={fetchUsers} />
       <UserList users={users} refresh={fetchUsers} />
     </div>
