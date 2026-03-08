@@ -4,37 +4,61 @@ import UserForm from "./components/UserForm"
 import UserList from "./components/UserList"
 
 export default function Home() {
-  const [users, setUsers] = useState([])
+
+  const [users,setUsers] = useState([])
 
   const fetchUsers = async () => {
-    try {
+    try{
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users`)
       const data = await res.json()
       setUsers(data)
-    } catch (error) {
-      console.error("Fetch error:", error)
+    }catch(error){
+      console.error(error)
     }
   }
 
-  useEffect(() => {
+  useEffect(()=>{
     fetchUsers()
-  }, [])
+  },[])
 
   return (
-    <main className="min-h-screen bg-[url('https://images.unsplash.com/photo-1544552866-d3ed42536cfd?q=80&w=2071')] bg-cover bg-fixed bg-center flex items-center justify-center p-4 md:p-10">
-      {/* Darkening Overlay */}
-      <div className="fixed inset-0 bg-black/20 pointer-events-none"></div>
 
-      <div className="relative z-10 w-full max-w-3xl space-y-8">
-        <header className="flex justify-between items-center px-6">
-          <h1 className="text-white text-4xl font-bold tracking-tight drop-shadow-lg">
-            Simple List
-          </h1>
-        </header>
+<main
+style={{
+minHeight:"100vh",
+background:"linear-gradient(135deg,#4f46e5,#06b6d4)",
+display:"flex",
+justifyContent:"center",
+alignItems:"center",
+padding:"20px"
+}}
+>
 
-        <UserForm onUserAdded={fetchUsers} />
-        <UserList users={users} refresh={fetchUsers} />
-      </div>
-    </main>
+<div
+style={{
+width:"100%",
+maxWidth:"700px",
+background:"#fff",
+padding:"25px",
+borderRadius:"12px",
+boxShadow:"0 10px 30px rgba(0,0,0,0.2)"
+}}
+>
+
+<h1 style={{textAlign:"center",marginBottom:"5px"}}>
+User Management
+</h1>
+
+<p style={{textAlign:"center",color:"#666",marginBottom:"20px"}}>
+Add and manage users easily
+</p>
+
+<UserForm onUserAdded={fetchUsers}/>
+<UserList users={users} refresh={fetchUsers}/>
+
+</div>
+
+</main>
+
   )
 }

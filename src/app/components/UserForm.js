@@ -2,50 +2,79 @@
 import { useState } from "react"
 
 export default function UserForm({ onUserAdded }) {
-  const [name, setName] = useState("")
-  const [email, setEmail] = useState("")
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-    if (!name || !email) return
+const [name,setName] = useState("")
+const [email,setEmail] = useState("")
 
-    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, email })
-    })
+const handleSubmit = async(e)=>{
+e.preventDefault()
 
-    setName("")
-    setEmail("")
-    onUserAdded()
-  }
+if(!name || !email) return
 
-  return (
-    <div className="bg-white/20 backdrop-blur-xl border border-white/30 rounded-[2.5rem] p-8 shadow-2xl">
-      <form onSubmit={handleSubmit} className="flex flex-col md:flex-row gap-4">
-        <div className="flex-1 relative">
-          <input
-            className="w-full bg-white/90 border-none rounded-2xl py-4 px-6 text-gray-800 placeholder-gray-400 focus:ring-2 focus:ring-indigo-500 outline-none transition shadow-inner"
-            placeholder="Enter Name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-        </div>
-        <div className="flex-1">
-          <input
-            className="w-full bg-white/90 border-none rounded-2xl py-4 px-6 text-gray-800 placeholder-gray-400 focus:ring-2 focus:ring-indigo-500 outline-none transition shadow-inner"
-            placeholder="Enter Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
-        <button 
-          type="submit"
-          className="bg-indigo-600 hover:bg-indigo-500 text-white px-8 py-4 rounded-2xl font-bold transition transform active:scale-95 shadow-lg whitespace-nowrap"
-        >
-          + Add Item
-        </button>
-      </form>
-    </div>
-  )
+await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users`,{
+method:"POST",
+headers:{ "Content-Type":"application/json"},
+body: JSON.stringify({name,email})
+})
+
+setName("")
+setEmail("")
+onUserAdded()
+}
+
+return(
+
+<form
+onSubmit={handleSubmit}
+style={{
+display:"flex",
+flexWrap:"wrap",
+gap:"10px",
+marginBottom:"20px"
+}}
+>
+
+<input
+placeholder="Enter Name"
+value={name}
+onChange={(e)=>setName(e.target.value)}
+style={{
+flex:"1 1 200px",
+padding:"10px",
+borderRadius:"6px",
+border:"1px solid #ccc"
+}}
+/>
+
+<input
+placeholder="Enter Email"
+value={email}
+onChange={(e)=>setEmail(e.target.value)}
+style={{
+flex:"1 1 200px",
+padding:"10px",
+borderRadius:"6px",
+border:"1px solid #ccc"
+}}
+/>
+
+<button
+type="submit"
+style={{
+flex:"1 1 120px",
+background:"#4f46e5",
+color:"#fff",
+border:"none",
+padding:"10px",
+borderRadius:"6px",
+cursor:"pointer"
+}}
+>
+Add User
+</button>
+
+</form>
+
+)
+
 }
